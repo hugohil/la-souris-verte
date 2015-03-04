@@ -1,0 +1,13 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
+.idea
+**/auth.js
+platforms/
+plugins/
+*.apk
+ionic.project
+*.zip

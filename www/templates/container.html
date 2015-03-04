@@ -1,0 +1,45 @@
+<md-toolbar layout="row">
+  <button ng-click="vm.toggleSideNav('left')" class="menuBtn">
+    <span class="visuallyhidden">Menu</span>
+  </button>
+  <h1>La Souris Verte</h1>
+</md-toolbar>
+
+<!--
+     Use `flex` [below] to have the side bar and content area
+     fill the available vertical display area
+ -->
+
+<div layout="row" flex>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-list>
+      <md-item>
+        <md-item-content>
+          <md-button ng-click="vm.changeView('plant', 'left')">
+            <span class="{{vm.plant.classname}} avatar" aria-label="avatar"></span>
+            {{vm.plant.name}}
+          </md-button>
+        </md-item-content>
+      </md-item>
+      <md-item>
+        <md-item-content>
+          <md-button ng-click="vm.changeView('settings', 'left')" aria-label="paramètres">
+            Paramètres
+          </md-button>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-sidenav>
+
+  <div layout="column" flex class="content-wrapper" id="content" ng-switch on="vm.currentView">
+    <div ng-switch-when="plant">
+      <plant></plant>
+    </div>
+    <div ng-switch-when="settings">
+      <h1>settings</h1>
+    </div>
+    <div ng-switch-default>
+      <plant></plant>
+    </div>
+  </div>
+</div>

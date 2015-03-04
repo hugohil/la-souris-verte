@@ -1,0 +1,13 @@
+<md-content layout="column" flex class="md-padding plant-content">
+  <h2>
+    <span class="{{vm.plant.classname}} avatar" role="img" aria-label="{{vm.plant.name}}"></span>
+    <span>{{vm.plant.name}}</span>
+    <p>{{vm.plant.type}}</p>
+  </h2>
+  <ul>
+    <li>Ensoleillement: {{vm.plant.stats.uv}}cc</li>
+    <li>Humidité: {{vm.plant.stats.humidity}}%</li>
+    <li>Temperature: {{vm.plant.stats.temperature}}°C</li>
+  </ul>
+  <button class="md-button md-raised md-primary" ng-click="vm.showFact()">Je veux apprendre des choses !</button>
+</md-content>

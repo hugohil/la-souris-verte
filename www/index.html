@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <title>La Souris Verte</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+
+  <body ng-app="lsv" layout="column">
+
+  <div ng-controller="NavCtrl as vm">
+    <md-toolbar layout="row">
+      <button ng-click="vm.toggleSideNav('left')" class="menuBtn" ng-show="vm.registered">
+        <span class="visuallyhidden">Menu</span>
+      </button>
+      <h1>La Souris Verte</h1>
+    </md-toolbar>
+
+    <div layout="row" flex="">
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-list>
+          <md-item>
+            <md-item-content>
+              <md-button ng-href="#/plant" ng-class="{'selected' : vm.current === '/plant'}">
+                <span class="{{vm.plant.classname}} avatar" aria-label="avatar"></span>
+                {{vm.plant.name}}
+              </md-button>
+            </md-item-content>
+          </md-item>
+          <md-item>
+            <md-item-content>
+              <md-button ng-href="#/settings" aria-label="paramètres" ng-class="{'selected' : vm.current === '/settings'}">
+                Paramètres
+              </md-button>
+            </md-item-content>
+          </md-item>
+        </md-list>
+      </md-sidenav>
+    </div>
+  </div>
+
+    <div ng-view="" layout="row" flex=""></div>
+
+    <!-- bower components -->
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./bower_components/angular-route/angular-route.js"></script>
+    <script src="./bower_components/angular-aria/angular-aria.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.js"></script>
+    <script src="./bower_components/angular-material/angular-material.js"></script>
+    <script src="./bower_components/firebase/firebase.js"></script>
+    <script src="./bower_components/angularfire/dist/angularfire.js"></script>
+
+    <!-- homemade scripts -->
+    <script src="./app.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/services.js"></script>
+    <script src="./js/controllers.js"></script>
+
+    </body>
+  </html>
