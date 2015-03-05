@@ -20,7 +20,7 @@
     });
     $scope.$on('$routeChangeSuccess', function(){
       self.current = $location.path();
-    })
+    });
   })
   .controller('WelcomeCtrl', function ($http, SensorService){
     var self = this;
@@ -30,6 +30,33 @@
         console.log(data);
       });
     }
+
+    self.add = function() {
+      var alarmTime = new Date();
+      alarmTime.setSeconds(alarmTime.getSeconds() + 2);
+      window.plugin.notification.local.add({
+        id: new Date().getTime(),
+        date: alarmTime,
+        message: "This is a message",
+        title: new Date().getTime(),
+        autoCancel: false,
+        sound: null
+      })
+    };
+
+    document.addEventListener("deviceready", function () {
+      cordova.plugins.notification.local.schedule({
+        id: 1,
+        text: 'Scheduled every minute',
+        every: 'minute',
+      });
+      cordova.plugins.notification.local.registerPermission(function (granted) {
+        alert(granted);
+      });
+      cordova.plugins.notification.local.hasPermission(function (granted) {
+        alert(granted);
+      });
+    }, false);
   })
   .controller('PlantCtrl', function (SensorService, FactsService){
     var self = this;

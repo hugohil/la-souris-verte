@@ -2,7 +2,7 @@
 'use strict';
 
   angular
-      .module('lsv', ['ngMaterial', 'ngRoute', 'firebase'])
+      .module('lsv', ['ngMaterial', 'ngRoute', 'firebase', 'ngCordova'])
       .config(function ($mdThemingProvider, $routeProvider) {
         $routeProvider
           .when('/', {
