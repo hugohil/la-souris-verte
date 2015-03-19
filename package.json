@@ -15,7 +15,9 @@
   },
   "scripts": {
     "postinstall": "bower update",
-
     "prestart": "npm update"
+  },
+  "dependencies": {
+    "mdns": "^2.2.8"
   }
 }

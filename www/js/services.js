@@ -4,37 +4,53 @@
   angular
   .module('lsv')
   .factory('SensorService', function ($http, $firebase, auth){
-    var sensorId;
+    // var sensorID = auth.sensor;
+    var sensorID;
     var plant = {};
-    var ref = new Firebase(auth.firebase);
-    var devPlant = {
-      name: 'Olivia',
-      type: 'Tomate',
-      classname: 'svg-11',
-      stats: {
-        uv: Math.ceil(Math.random() * 1024),
-        humidity: Math.ceil(Math.random() * 1024),
-        temperature: Math.ceil(Math.random() * 1024)
-      }
-    };
+    // var ref = new Firebase(auth.firebase + '/' + sensorID);
+    var ref;
+    var registered = false;
+    if(localStorage.lsvRegistered && localStorage.lsvSensorID){
+      registered = localStorage.lsvRegistered;
+      sensorID = localStorage.lsvSensorID;
+      ref = new Firebase(auth.firebase + '/' + sensorID);
+    }
 
-    return{
+    return {
       getSensor: function(){
-        var promise = $http.get(auth.sensor, {timeout: 150}).then(function (res){
-          console.log(res);
-          return response.status;
-        });
+        var promise = $http
+          .get(auth.sensor, {timeout: 1500})
+          .success(function (res){
+            console.log(res);
+            sensorID = res.data;
+            localStorage.lsvSensorID = sensorID;
+            ref = new Firebase(auth.firebase + '/' + sensorID);
+            localStorage.lsvRegistered = true;
+            registered = localStorage.lsvRegistered;
+            return res.status;
+          })
+          .error(function (err){
+            return null;
+          });
         return promise;
       },
       getStats: function(){
-        plant = (plant.length) ? plant : devPlant;
+        ref.on("value", function(snapshot) {
+          console.log(snapshot.val());
+          plant = snapshot.val();
+        });
         return plant;
+      },
+      pushPlant: function(plantname, cb){
+        ref.set({name: plantname}, cb);
+      },
+      isRegistered: function(){
+        return registered;
       }
     }
   })
   .factory('FactsService', function ($firebase, auth, $mdDialog){
     var ref = new Firebase(auth.firebase + '/facts');
-
 
     return {
       getRandomFact: function(){
