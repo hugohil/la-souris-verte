@@ -3,7 +3,7 @@
 
   angular
   .module('lsv')
-  .factory('SensorService', function ($http, $firebase, auth){
+  .factory('SensorService', function ($http, $firebase, auth, $q){
     localStorage.lsvRegistered = localStorage.lsvRegistered || null;
     localStorage.lsvSensorID = localStorage.lsvSensorID || null;
     // var sensorID = auth.sensor;
@@ -38,11 +38,13 @@
         return promise;
       },
       getStats: function(){
-        ref.on("value", function(snapshot) {
+        var deferred = $q.defer();
+        ref.once("value", function(snapshot) {
           console.log(snapshot.val());
           plant = snapshot.val();
+          deferred.resolve(plant);
         });
-        return plant;
+        return deferred.promise;
       },
       pushPlant: function(plantname, cb){
         ref.set({name: plantname}, cb);

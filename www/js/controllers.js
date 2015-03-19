@@ -75,7 +75,11 @@
   })
   .controller('PlantCtrl', function (SensorService, FactsService){
     var self = this;
-    this.plant = SensorService.getStats();
+    var plantPromise = SensorService.getStats();
+    plantPromise.then(function(plant){
+      self.plant = plant;
+      console.log(self.plant);
+    })
 
     this.showFact = function(){
       FactsService.getRandomFact();
