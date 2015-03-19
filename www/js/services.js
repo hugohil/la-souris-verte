@@ -4,15 +4,18 @@
   angular
   .module('lsv')
   .factory('SensorService', function ($http, $firebase, auth){
+    localStorage.lsvRegistered = localStorage.lsvRegistered || null;
+    localStorage.lsvSensorID = localStorage.lsvSensorID || null;
     // var sensorID = auth.sensor;
     var sensorID;
     var plant = {};
     // var ref = new Firebase(auth.firebase + '/' + sensorID);
     var ref;
     var registered = false;
-    if(localStorage.lsvRegistered && localStorage.lsvSensorID){
+    if(localStorage.lsvRegistered !== "null" && localStorage.lsvSensorID !== "null"){
       registered = localStorage.lsvRegistered;
       sensorID = localStorage.lsvSensorID;
+      console.log(sensorID);
       ref = new Firebase(auth.firebase + '/' + sensorID);
     }
 
@@ -22,7 +25,7 @@
           .get(auth.sensor, {timeout: 1500})
           .success(function (res){
             console.log(res);
-            sensorID = res.data;
+            sensorID = res;
             localStorage.lsvSensorID = sensorID;
             ref = new Firebase(auth.firebase + '/' + sensorID);
             localStorage.lsvRegistered = true;
